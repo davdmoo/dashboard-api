@@ -1,6 +1,10 @@
-const fastify = require('fastify')({ logger: true });
+const fastify = require('fastify')();
 const routes = require("./routes/index");
+const postgres = require("@fastify/postgres");
 
+fastify.register(postgres, {
+  connectionString: "postgres://postgres@localhost/postgres",
+});
 fastify.register(routes);
 
 const start = async () => {
