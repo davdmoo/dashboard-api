@@ -1,0 +1,24 @@
+{
+  "name": "dashboard-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davdmoo/dashboard-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davdmoo/dashboard-api/issues"
+  },
+  "homepage": "https://github.com/davdmoo/dashboard-api#readme",
+  "dependencies": {
+    "fastify": "^4.3.0"
+  }
+}
