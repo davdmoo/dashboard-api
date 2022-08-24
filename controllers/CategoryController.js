@@ -29,6 +29,33 @@ class CategoryController {
         .send({ message: "Internal server error" });
     }
   }
+
+  static async deleteCategory(request, reply) {
+    try {
+      const categoryId = request.params.id;
+      const category = await Category.findByPk(categoryId);
+
+      if (!category) throw "NotFound";
+
+      await category.destroy();
+
+      reply
+        .code(200)
+        .send({ message: `${category.name} deleted` });
+    } catch (error) {
+      console.log(`deleteCategory error - ${error}`);
+
+      if (error == "NotFound") {
+        reply
+          .code(404)
+          .send({ message: "Not found" });
+      } else {
+        reply
+          .code(500)
+          .send({ message: "Internal server error" });
+      }
+    }
+  }
 }
 
 module.exports = CategoryController;

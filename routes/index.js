@@ -2,7 +2,7 @@ const CategoryController = require("../controllers/CategoryController");
 const OrderController = require("../controllers/OrderController.js");
 const ProductController = require("../controllers/ProductController");
 
-async function routes (fastify, options) {
+async function routes(fastify, options) {
   const opts = {
     schema: {
       response: {
@@ -34,6 +34,10 @@ async function routes (fastify, options) {
   fastify.get("/categories", CategoryController.getCategories);
   fastify.get("/orders", OrderController.getOrders);
   fastify.get("/products/:id", ProductController.getProductById);
+
+  fastify.delete("/products/:id", ProductController.deleteProduct);
+  fastify.delete("/orders/:id", OrderController.deleteOrder);
+  fastify.delete("/categories/:id", CategoryController.deleteCategory);
 
   fastify.post("/products", ProductController.createProduct);
   fastify.post("/categories", CategoryController.createCategory);

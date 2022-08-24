@@ -1,4 +1,4 @@
-const { Product } = require("../models");
+const { Product, Category } = require("../models");
 const Sequelize = require('sequelize');
 const op = Sequelize.Op;
 
@@ -33,12 +33,13 @@ class ProductController {
         }
       }
 
-      const products = await Product.findAll({ where: query });
+      const products = await Product.findAll({ include: Category, where: query });
 
       reply
         .code(200)
         .send(products);
     } catch (error) {
+      console.log(`getProducts error - ${error}`);
       reply
         .code(500)
         .send({ message: "Internal server error" });
@@ -57,6 +58,33 @@ class ProductController {
       reply
         .code(500)
         .send({ message: "Internal server error" });
+    }
+  }
+
+  static async deleteProduct(request, reply) {
+    try {
+      const productId = request.params.id;
+      const product = await Product.findByPk(productId);
+
+      if (!product) throw "NotFound";
+
+      await product.destroy();
+
+      reply
+        .code(200)
+        .send({ message: `${product.name} deleted` });
+    } catch (error) {
+      console.log(`deleteProduct error - ${error}`);
+
+      if (error == "NotFound") {
+        reply
+          .code(404)
+          .send({ message: "Not found" });
+      } else {
+        reply
+          .code(500)
+          .send({ message: "Internal server error" });
+      }
     }
   }
 }
